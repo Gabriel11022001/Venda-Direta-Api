@@ -17,6 +17,11 @@ try {
         $rota->post("/usuarios/cadastrar", UsuarioController::class, "cadastrar");
     }
 
+    // listar usuários
+    if ($endpoint === "/usuarios/listar") {
+        $rota->get("/usuarios/listar", UsuarioController::class, "listar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

@@ -80,4 +80,22 @@ class UsuarioServico extends ServicoBase {
 
     }
 
+    public function listar() {
+
+        try {
+            $usuarios = $this->usuarioRepositorio->listar();
+
+            if ($usuarios) {
+                Resposta::response(true, "Usuários listados com sucesso.", $usuarios);
+            }
+
+            Resposta::response(true, "Não existem usuários cadastrados na base de dados.", array());
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se listar os usuários: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se listar os usuários.");
+        }
+
+    }
+
 }

@@ -19,4 +19,8 @@ class UsuarioController {
         $this->usuarioServico->cadastrar();
     }
 
+    public function listar() {
+        $this->usuarioServico->listar();
+    }
+
 }
