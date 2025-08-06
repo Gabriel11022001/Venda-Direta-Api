@@ -27,4 +27,8 @@ class UsuarioController {
         $this->usuarioServico->buscarPeloId();
     }
 
+    public function deletar() {
+        $this->usuarioServico->deletar();
+    }
+
 }

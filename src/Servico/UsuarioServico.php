@@ -127,4 +127,33 @@ class UsuarioServico extends ServicoBase {
 
     }
 
+    public function deletar() {
+
+        try {
+            
+            if (!isset($_GET["usuario_id"])) {
+                Resposta::response(false, "Informe o id do usuário.");
+            }
+
+            $usuarioId = $_GET["usuario_id"];
+
+            if (empty($usuarioId)) {
+                Resposta::response(false, "Informe o id do usuário.");
+            }
+
+            if (empty($this->usuarioRepositorio->buscarPeloId($usuarioId))) {
+                Resposta::response(false, "Usuário não encontrado.");
+            }
+
+            $this->usuarioRepositorio->deletar($usuarioId);
+
+            Resposta::response(true, "Usuário deletado com sucesso.");
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se deletar o usuario: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se deletar o usuário.");
+        }
+
+    }
+
 }

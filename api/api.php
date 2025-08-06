@@ -27,6 +27,11 @@ try {
         $rota->get("/usuarios/consultar", UsuarioController::class, "buscarPeloId");
     }
 
+    // deletar usuário
+    if ($endpoint === "/usuarios/deletar") {
+        $rota->delete("/usuarios/deletar", UsuarioController::class, "deletar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";
