@@ -22,6 +22,11 @@ try {
         $rota->get("/usuarios/listar", UsuarioController::class, "listar");
     }
 
+    // buscar usuário pelo id
+    if ($endpoint === "/usuarios/consultar") {
+        $rota->get("/usuarios/consultar", UsuarioController::class, "buscarPeloId");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

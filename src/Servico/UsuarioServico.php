@@ -98,4 +98,33 @@ class UsuarioServico extends ServicoBase {
 
     }
 
+    public function buscarPeloId() {
+
+        try {
+
+            if (!isset($_GET["usuario_id"])) {
+                Resposta::response(false, "Informe o id.");
+            }
+
+            $usuarioId = $_GET["usuario_id"];
+
+            if (empty($usuarioId)) {
+                Resposta::response(false, "Informe o id.");
+            }
+
+            $usuario = $this->usuarioRepositorio->buscarPeloId($usuarioId);
+
+            if (empty($usuario)) {
+                Resposta::response(false, "Usuário não encontrado.");
+            }
+
+            Resposta::response(true, "Usuário encontrado com sucesso.", $usuario);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se buscar o usuário pelo id: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se buscar o usuário pelo id.");
+        }
+
+    }
+
 }

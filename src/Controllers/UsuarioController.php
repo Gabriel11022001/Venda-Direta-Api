@@ -23,4 +23,8 @@ class UsuarioController {
         $this->usuarioServico->listar();
     }
 
+    public function buscarPeloId() {
+        $this->usuarioServico->buscarPeloId();
+    }
+
 }
