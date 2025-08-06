@@ -16,4 +16,8 @@ interface IUsuarioRepositorio {
 
     function buscarPeloId($idUsuario);
 
+    function buscarPeloEmail($email);
+
+    function buscarPeloLogin($login);
+
 }
