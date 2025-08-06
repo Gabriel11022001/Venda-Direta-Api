@@ -5,8 +5,6 @@ namespace Utils;
 use Exception;
 use PDO;
 
-require_once __DIR__ . "/../../api/constantes.php";
-
 class BancoDados {
 
     // obter conexão com o banco de dados
