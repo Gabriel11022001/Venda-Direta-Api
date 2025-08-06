@@ -20,4 +20,6 @@ interface IUsuarioRepositorio {
 
     function buscarPeloLogin($login);
 
+    function buscarPeloLoginESenha($login, $senha);
+
 }

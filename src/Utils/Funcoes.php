@@ -66,4 +66,22 @@ class Funcoes {
         return true;
     }
 
+    public static function validarLoginSenha($login, $senha) {
+        $erros = [];
+
+        if (empty($login)) {
+            $erros["login"] = "Informe o login.";
+        } elseif (strlen($login) < 6) {
+            $erros["login"] = "O login deve possuir no mínimo 6 caracteres.";
+        }
+
+        if (empty($senha)) {
+            $erros["senha"] = "Informe a senha.";
+        } elseif (strlen($senha) < 6) {
+            $erros["senha"] = "A senha deve possuir no mínimo 6 caracteres.";
+        }
+
+        return $erros;
+    }
+
 }

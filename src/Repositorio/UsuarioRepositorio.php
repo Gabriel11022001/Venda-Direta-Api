@@ -123,4 +123,15 @@ class UsuarioRepositorio extends Repositorio implements IUsuarioRepositorio {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function buscarPeloLoginESenha($login, $senha) {
+        $stmt = $this->bancoDados->prepare("SELECT nome, email, nivel_acesso, status
+        FROM tb_usuarios WHERE login = :login AND senha = :senha");
+
+        $stmt->bindValue(":login", $login);
+        $stmt->bindValue(":senha", $senha);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

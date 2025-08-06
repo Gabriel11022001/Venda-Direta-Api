@@ -1,5 +1,6 @@
 <?php
 
+use Controllers\LoginController;
 use Controllers\Rota;
 use Controllers\UsuarioController;
 use Utils\Resposta;
@@ -30,6 +31,11 @@ try {
     // deletar usuário
     if ($endpoint === "/usuarios/deletar") {
         $rota->delete("/usuarios/deletar", UsuarioController::class, "deletar");
+    }
+
+    // login
+    if ($endpoint === "/login") {
+        $rota->post("/login", LoginController::class, "login");
     }
 
     Resposta::response(false, "404 - Rota inválida.");
