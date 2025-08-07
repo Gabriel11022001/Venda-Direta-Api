@@ -1,5 +1,6 @@
 <?php
 
+use Controllers\CategoriaController;
 use Controllers\LoginController;
 use Controllers\Rota;
 use Controllers\UsuarioController;
@@ -36,6 +37,11 @@ try {
     // login
     if ($endpoint === "/login") {
         $rota->post("/login", LoginController::class, "login");
+    }
+
+    // cadastrar categoria
+    if ($endpoint === "/categorias/cadastrar") {
+        $rota->post("/categorias/cadastrar", CategoriaController::class, "cadastrar");
     }
 
     Resposta::response(false, "404 - Rota inválida.");
