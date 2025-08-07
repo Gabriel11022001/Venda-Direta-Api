@@ -10,6 +10,8 @@ require_once "autoload.php";
 require_once __DIR__ . "/configurar.php";
 require_once __DIR__ . "/../src/Utils/getParametro.php";
 
+session_start();
+
 try {   
     $rota = new Rota();
     $endpoint = $rota->getRotaAtual();

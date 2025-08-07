@@ -114,7 +114,7 @@ class UsuarioRepositorio extends Repositorio implements IUsuarioRepositorio {
     }
 
     public function buscarPeloLogin($login) {
-        $stmt = $this->bancoDados->prepare("SELECT nome, email, nivel_acesso, status
+        $stmt = $this->bancoDados->prepare("SELECT usuario_id, nome, email, nivel_acesso, status
         FROM tb_usuarios WHERE login = :login");
 
         $stmt->bindValue(":login", $login);
@@ -124,7 +124,7 @@ class UsuarioRepositorio extends Repositorio implements IUsuarioRepositorio {
     }
 
     public function buscarPeloLoginESenha($login, $senha) {
-        $stmt = $this->bancoDados->prepare("SELECT nome, email, nivel_acesso, status
+        $stmt = $this->bancoDados->prepare("SELECT usuario_id, nome, email, nivel_acesso, status
         FROM tb_usuarios WHERE login = :login AND senha = :senha");
 
         $stmt->bindValue(":login", $login);
