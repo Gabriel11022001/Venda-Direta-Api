@@ -2,6 +2,6 @@
 
 namespace Repositorio\Interfaces;
 
-interface ICategoriaRepositorio extends IRepositorio, IBuscarPeloNomeRepositorio {
+interface ICategoriaRepositorio extends IRepositorio, IBuscarPeloNomeRepositorio, IAlterarStatusRepositorio {
 
 }

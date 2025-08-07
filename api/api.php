@@ -54,6 +54,11 @@ try {
         $rota->get("/categorias/consultar", CategoriaController::class, "buscarPeloId");
     }
 
+    // alterar o status da categoria
+    if ($endpoint === "/categorias/status/editar") {
+        $rota->put("/categorias/status/editar", CategoriaController::class, "alterarStatus");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

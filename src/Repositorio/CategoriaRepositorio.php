@@ -85,4 +85,18 @@ class CategoriaRepositorio extends Repositorio implements ICategoriaRepositorio 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function alterarStatus($id, $novoStatus) {
+        $stmt = $this->bancoDados->prepare("UPDATE tb_categorias SET status = :novo_status
+        WHERE categoria_id = :categoria_id");
+
+        $stmt->bindValue(":novo_status", $novoStatus, PDO::PARAM_BOOL);
+        $stmt->bindValue(":categoria_id", $id, PDO::PARAM_INT);
+
+        if (!$stmt->execute()) {
+
+            throw new Exception("Erro ao tentar-se alterar o status da categoria.");
+        }
+
+    }
+
 }

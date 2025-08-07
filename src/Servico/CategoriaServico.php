@@ -151,4 +151,30 @@ class CategoriaServico extends ServicoBase {
 
     }
 
+    public function alterarStatus() {
+
+        try {
+            $categoriaId = getParametro("categoria_id");
+            $status = getParametro("status");
+
+            if (empty($categoriaId)) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            // validar se existe uma categoria cadastrada com o id informado
+            if (empty($this->categoriaRepositorio->buscarPeloId($categoriaId))) {
+                Resposta::response(false, "Não existe uma categoria na base de dados com o id informado.");
+            }
+
+            $this->categoriaRepositorio->alterarStatus($categoriaId, $status);
+
+            Resposta::response(true, "O status da categoria foi alterado com sucesso na base de dados.");
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se alterar o status da categoria: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se alterar o status da categoria.");
+        }
+
+    }
+
 }

@@ -27,4 +27,8 @@ class CategoriaController {
         $this->categoriaServico->buscarPeloId();
     }
 
+    public function alterarStatus() {
+        $this->categoriaServico->alterarStatus();
+    }
+
 }
