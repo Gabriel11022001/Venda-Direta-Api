@@ -23,4 +23,8 @@ class CategoriaController {
         $this->categoriaServico->editar();
     }
 
+    public function buscarPeloId() {
+        $this->categoriaServico->buscarPeloId();
+    }
+
 }

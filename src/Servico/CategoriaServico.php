@@ -118,4 +118,37 @@ class CategoriaServico extends ServicoBase {
 
     }
 
+    public function buscarPeloId() {
+
+        try {
+            
+            if (!isset($_GET["categoria_id"])) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            $categoriaId = $_GET["categoria_id"];
+
+            if (empty($categoriaId)) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            $categoria = $this->categoriaRepositorio->buscarPeloId($categoriaId);
+
+            if (!$categoria) {
+                Resposta::response(false, "Categoria não encontrada.");
+            }
+
+            Resposta::response(true, "Categoria encontrada com sucesso.", [
+                "categoria_id" => $categoria["categoria_id"],
+                "nome" => $categoria["nome"],
+                "status" => $categoria["status"] ? "Ativo" : "Inativo"
+            ]);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se buscar a categoria pelo id: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se buscar a categoria pelo id.");
+        }
+
+    }
+
 }

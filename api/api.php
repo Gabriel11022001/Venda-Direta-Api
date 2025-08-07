@@ -49,6 +49,11 @@ try {
         $rota->put("/categorias/editar", CategoriaController::class, "editar");
     }
 
+    // buscar categoria pelo id
+    if ($endpoint === "/categorias/consultar") {
+        $rota->get("/categorias/consultar", CategoriaController::class, "buscarPeloId");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";
