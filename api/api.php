@@ -44,6 +44,11 @@ try {
         $rota->post("/categorias/cadastrar", CategoriaController::class, "cadastrar");
     }
 
+    // editar categoria
+    if ($endpoint === "/categorias/editar") {
+        $rota->put("/categorias/editar", CategoriaController::class, "editar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

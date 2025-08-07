@@ -67,4 +67,55 @@ class CategoriaServico extends ServicoBase {
 
     }
 
+    public function editar() {
+
+        try {
+            $categoriaId = getParametro("categoria_id");
+            $nome = getParametro("nome");
+            $status = getParametro("status");
+
+            $errosCampos = [];
+
+            if (empty($categoriaId)) {
+                $errosCampos["categoria_id"] = "Informe o id da categoria.";
+            }
+
+            if (empty($nome)) {
+                $errosCampos["nome"] = "Informe o nome da categoria.";
+            } elseif (strlen($nome) < 3) {
+                $errosCampos["nome"] = "O nome da categoria deve possuir no mínimo 3 caracteres.";
+            }
+
+            if (!empty($errosCampos)) {
+                Resposta::response(false, "Campos inválidos.", $errosCampos);
+            }
+
+            $categoriaValidar = $this->categoriaRepositorio->buscarPeloId($categoriaId);
+
+            // validar se existe outra categoria cadastrada com o id informado
+            if (empty($categoriaValidar)) {
+                Resposta::response(false, "Não existe uma categoria cadastrada com o id informado.");
+            }
+
+            // validar se existe outra categoria com o mesmo nome informado
+            if ($categoriaValidar["nome"] == $nome && $categoriaId != $categoriaValidar["categoria_id"]) {
+                Resposta::response(false, "Já existe outra categoria cadastrada na base de dados com o mesmo nome.");
+            }
+
+            $categoria = new Categoria();
+            $categoria->setCategoriaId($categoriaId);
+            $categoria->setNome($nome);
+            $categoria->setStatus($status);
+
+            $this->categoriaRepositorio->editar($categoria);
+
+            Resposta::response(true, "Categoria salva com sucesso na base de dados.", $categoria->toArray());
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se editar a categoria: " . $e->getMessage());
+            
+            Resposta::response(false, "Erro ao tentar-se editar a categoria.");
+        }
+
+    }
+
 }

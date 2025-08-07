@@ -19,4 +19,8 @@ class CategoriaController {
         $this->categoriaServico->cadastrar();
     }
 
+    public function editar() {
+        $this->categoriaServico->editar();
+    }
+
 }
