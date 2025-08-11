@@ -72,6 +72,11 @@ try {
         $rota->post("/produtos/cadastrar", ProdutoController::class, "cadastrar");
     }
 
+    // listar os produtos de forma paginada
+    if  ($endpoint === "/produtos/listar") {
+        $rota->get("/produtos/listar", ProdutoController::class, "listar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

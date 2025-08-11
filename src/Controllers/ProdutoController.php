@@ -19,4 +19,8 @@ class ProdutoController {
         $this->produtoServico->cadastrar();
     }
 
+    public function listar() {
+        $this->produtoServico->listar();
+    }
+
 }

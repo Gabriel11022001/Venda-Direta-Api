@@ -22,6 +22,7 @@ class ProdutoServico extends ServicoBase {
      * @property ICategoriaRepositorio $categoriaRepositorio
      */
     private $categoriaRepositorio;
+    private $elementosPorPagina = array(5, 10, 20);
 
     public function __construct() {
         parent::__construct();
@@ -79,6 +80,40 @@ class ProdutoServico extends ServicoBase {
             Log::erro("Erro ao tentar-se cadastrar o produto na base de dados: " . $e->getMessage());
 
             Resposta::response(false, "Erro ao tentar-se cadastrar o produto.");
+        }
+
+    }
+
+    public function listar() {
+
+        try {
+
+            if (!isset($_GET["pagina_atual"]) || !isset($_GET["elementos_por_pagina"])) {
+                Resposta::response(false, "Informe a página atual e a quantidade de elementos por página.");
+            }
+
+            $paginaAtual = $_GET["pagina_atual"];
+            $elementosPorPagina = $_GET["elementos_por_pagina"];
+
+            if (empty($paginaAtual) || empty($elementosPorPagina)) {
+                Resposta::response(false, "Informe a página atual e a quantidade de elementos por página.");
+            }
+
+            if (!in_array($elementosPorPagina, $this->elementosPorPagina)) {
+                Resposta::response(false, "Informe um total de elementos por página correto.");
+            }
+
+            $produtos = $this->produtoRepositorio->listarPaginado($paginaAtual, $elementosPorPagina);
+
+            if (!$produtos) {
+                Resposta::response(true, "Não existem produtos cadastrados na base de dados.", []);
+            }
+
+            Resposta::response(true, "Produtos encontrados com sucesso.", $produtos);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se listar os produtos: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se listar os produtos.");
         }
 
     }

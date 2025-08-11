@@ -14,3 +14,8 @@ DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
 DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
 
 
+[ ERRO ] - 11-08-2025 17:09:09 -> Erro ao tentar-se listar os produtos: SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "ORDER"
+LINE 7:         ORDER BY p.nome_produto ASC
+                ^
+
+

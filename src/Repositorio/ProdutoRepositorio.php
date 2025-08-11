@@ -73,7 +73,19 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
     }
 
     public function listarPaginado($paginaAtual, $elementosPorPagina) {
-        
+        $stmt = $this->bancoDados->prepare("SELECT p.*, c.nome AS nome_categoria, c.status AS status_categoria
+        FROM tb_produtos AS p 
+        INNER JOIN tb_categorias AS c
+        ON p.categoria_id = c.categoria_id
+        ORDER BY p.preco_venda ASC
+        LIMIT :limite
+        OFFSET :offset");   
+
+        $stmt->bindValue(":limite", $elementosPorPagina, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", ($paginaAtual - 1) * $elementosPorPagina);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function buscarEntrePrecos($precoInicial, $precoFinal, $paginaAtual, $elementosPorPaginas) {
