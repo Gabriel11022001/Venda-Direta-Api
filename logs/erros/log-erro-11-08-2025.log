@@ -1,0 +1,16 @@
+[ ERRO ] - 11-08-2025 18:05:14 -> Erro ao tentar-se salvar dados para teste: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_produtos" violates foreign key constraint "tb_produtos_categoria_id_fkey"
+DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
+
+
+[ ERRO ] - 11-08-2025 18:06:53 -> Erro ao tentar-se salvar dados para teste: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_produtos" violates foreign key constraint "tb_produtos_categoria_id_fkey"
+DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
+
+
+[ ERRO ] - 11-08-2025 18:08:17 -> Erro ao tentar-se salvar dados para teste: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_produtos" violates foreign key constraint "tb_produtos_categoria_id_fkey"
+DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
+
+
+[ ERRO ] - 11-08-2025 18:09:22 -> Erro ao tentar-se salvar dados para teste: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_produtos" violates foreign key constraint "tb_produtos_categoria_id_fkey"
+DETAIL:  Key (categoria_id)=(1) is not present in table "tb_categorias".
+
+
