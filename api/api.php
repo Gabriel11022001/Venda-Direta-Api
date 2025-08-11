@@ -61,6 +61,11 @@ try {
         $rota->put("/categorias/status/editar", CategoriaController::class, "alterarStatus");
     }
 
+    // habilitar o perfil do usuário
+    if ($endpoint === "/usuarios/perfil/habilitar") {
+        $rota->put("/usuarios/perfil/habilitar", UsuarioController::class, "habilitarPerfil");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

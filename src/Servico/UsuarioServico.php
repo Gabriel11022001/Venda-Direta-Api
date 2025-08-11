@@ -156,4 +156,32 @@ class UsuarioServico extends ServicoBase {
 
     }
 
+    public function habilitarPerfil() {
+
+        try {
+
+            if (!isset($_GET["usuario_id"])) {
+                Resposta::response(false, "Informe o id do usuário na url.");
+            }
+
+            $usuarioId = $_GET["usuario_id"];
+
+            if (empty($usuarioId)) {
+                Resposta::response(false, "Informe o id do usuário.");
+            }
+
+            // validar se existe um usuário cadastrado com o id informado 
+            if (empty($this->usuarioRepositorio->buscarPeloId($usuarioId))) {
+                Resposta::response(false, "Não existe um usuário cadastrado com o id informado.");
+            }
+
+            $this->usuarioRepositorio->alterarStatus($usuarioId, true);
+
+            Resposta::response(true, "Perfil habilitado com sucesso.");
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se habilitar o perfil: " . $e->getMessage());
+        }
+
+    }
+
 }

@@ -31,4 +31,8 @@ class UsuarioController {
         $this->usuarioServico->deletar();
     }
 
+    public function habilitarPerfil() {
+        $this->usuarioServico->habilitarPerfil();
+    }
+
 }
