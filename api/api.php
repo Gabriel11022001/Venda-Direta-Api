@@ -2,6 +2,7 @@
 
 use Controllers\CategoriaController;
 use Controllers\LoginController;
+use Controllers\ProdutoController;
 use Controllers\Rota;
 use Controllers\UsuarioController;
 use Utils\Resposta;
@@ -64,6 +65,11 @@ try {
     // habilitar o perfil do usuário
     if ($endpoint === "/usuarios/perfil/habilitar") {
         $rota->put("/usuarios/perfil/habilitar", UsuarioController::class, "habilitarPerfil");
+    }
+
+    // cadastrar produto
+    if ($endpoint === "/produtos/cadastrar") {
+        $rota->post("/produtos/cadastrar", ProdutoController::class, "cadastrar");
     }
 
     Resposta::response(false, "404 - Rota inválida.");

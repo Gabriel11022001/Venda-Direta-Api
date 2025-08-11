@@ -36,6 +36,10 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
         }
 
         $produtoCadastrar->setProdutoId($this->bancoDados->lastInsertId());
+
+        $cagoriaRepositorio = new CategoriaRepositorio($this->bancoDados);
+
+        $produtoCadastrar->setCategoria($cagoriaRepositorio->buscarPeloId($produtoCadastrar->getCategoriaId()));
     }
 
     /**
@@ -59,6 +63,13 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
             throw new Exception("Erro ao tentar-se editar o produto na base de dados.");
         }
 
+        $categoriaRepositorio = new CategoriaRepositorio($this->bancoDados);
+
+        $produtoEditar->setCategoria(
+            categoria: $categoriaRepositorio->buscarPeloId(
+                $produtoEditar->getCategoriaId()
+            )  
+        );
     }
 
     public function listarPaginado($paginaAtual, $elementosPorPagina) {
@@ -96,6 +107,19 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
             throw new Exception("Erro ao tentar-se deletar o produto na base de dados.");
         }
 
+    }
+
+    public function buscarPeloNome($nome) {
+        $stmt = $this->bancoDados->prepare("SELECT p.*, c.nome AS nome_categoria, c.status AS status_categoria
+        FROM tb_produtos AS p
+        INNER JOIN tb_categorias AS c
+        ON p.categoria_id = c.categoria_id
+        AND p.nome_produto = :nome_produto");
+
+        $stmt->bindValue(":nome_produto", $nome, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }

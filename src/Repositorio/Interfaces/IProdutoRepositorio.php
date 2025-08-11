@@ -2,7 +2,7 @@
 
 namespace Repositorio\Interfaces;
 
-interface IProdutoRepositorio extends IRepositorio {
+interface IProdutoRepositorio extends IRepositorio, IBuscarPeloNomeRepositorio {
 
     function buscarEntrePrecos($precoInicial, $precoFinal, $paginaAtual, $elementosPorPagina);
 

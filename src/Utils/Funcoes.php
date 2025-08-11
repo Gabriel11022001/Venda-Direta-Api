@@ -84,4 +84,10 @@ class Funcoes {
         return $erros;
     }
 
+    public static function validarDadosProdutoCadastro($dadosProduto) {
+        $erros = [];
+        
+        return $erros;
+    }
+
 }

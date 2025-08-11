@@ -108,7 +108,8 @@ class Produto extends Model {
             "status" => $this->getStatus(),
             "unidades_estoque" => $this->getUnidadesEstoque(),
             "categoria_id" => $this->getCategoriaId(),
-            "categoria" => !empty($this->getCategoria()) ? $this->getCategoria()->toArray() : null
+            "categoria" => !empty($this->getCategoria()) ? 
+            (is_array($this->getCategoria()) ? $this->getCategoria() : $this->getCategoria()->toArray()) : null
         ];
     }
 
