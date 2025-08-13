@@ -221,4 +221,53 @@ class CategoriaServico extends ServicoBase {
 
     }
 
+    public function listar() {
+
+        try {
+
+            if (!isset($_GET["pagina_atual"]) || !isset($_GET["elementos_por_pagina"])) {
+                Resposta::response(false, "Informe a pagina atual e quantidade de elementos por página.");
+            }
+
+            $paginaAtual = $_GET["pagina_atual"];
+            $elementosPorPagina = $_GET["elementos_por_pagina"];
+
+            if (empty($paginaAtual) || empty($elementosPorPagina)) {
+                Resposta::response(false, "Informe a pagina atual e quantidade de elementos por página.");
+            }
+
+            $maximosElementosPorPagina = [
+                5,
+                10,
+                15
+            ];
+
+            if (!in_array($elementosPorPagina, $maximosElementosPorPagina)) {
+                Resposta::response(false, "Quantidade de elementos por página inválido.");
+            }
+
+            $categorias = $this->categoriaRepositorio->listarPaginado($paginaAtual, $elementosPorPagina);
+
+            if (!$categorias) {
+                Resposta::response(true, "Não existem categorias cadastradas na base de dados.", array());
+            }
+
+            $categorias = array_map(function ($categoria) {
+
+                return [
+                    "categoria_id" => $categoria["categoria_id"],
+                    "nome" => $categoria["nome"],
+                    "status" => $categoria["status"] ? "Ativo" : "Inativo"
+                ];
+            }, $categorias);
+
+            Resposta::response(true, "Categorias listadas com sucesso.", $categorias);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se listar as categorias: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se listar as categorias.");
+        }
+
+    }
+
 }

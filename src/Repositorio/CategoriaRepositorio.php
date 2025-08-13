@@ -64,7 +64,16 @@ class CategoriaRepositorio extends Repositorio implements ICategoriaRepositorio 
     }
 
     public function listarPaginado($paginaAtual, $elementosPorPagina) {
-        
+        $stmt = $this->bancoDados->prepare("SELECT * FROM tb_categorias
+        ORDER BY nome ASC
+        LIMIT :limite
+        OFFSET :offset");
+
+        $stmt->bindValue(":limite", $elementosPorPagina, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", ($paginaAtual - 1) * $elementosPorPagina);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function buscarPeloId($idCategoria) {

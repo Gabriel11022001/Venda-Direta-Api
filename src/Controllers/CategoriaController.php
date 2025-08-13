@@ -35,4 +35,8 @@ class CategoriaController {
         $this->categoriaServico->deletar();
     }
 
+    public function listar() {
+        $this->categoriaServico->listar();
+    }
+
 }
