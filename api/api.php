@@ -92,6 +92,11 @@ try {
         $rota->get("/produtos/consultar", ProdutoController::class, "buscarPeloId");
     }
 
+    // listar produtos pela categoria
+    if ($endpoint === "/produtos/listar-pela-categoria") {
+        $rota->get("/produtos/listar-pela-categoria", ProdutoController::class, "listarProdutosCategoria");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

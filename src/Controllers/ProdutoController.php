@@ -27,4 +27,8 @@ class ProdutoController {
         $this->produtoServico->buscarPeloId();
     }
 
+    public function listarProdutosCategoria() {
+        $this->produtoServico->listarProdutosCategoria();
+    }
+
 }

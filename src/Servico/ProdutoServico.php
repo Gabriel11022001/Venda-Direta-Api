@@ -147,4 +147,46 @@ class ProdutoServico extends ServicoBase {
 
     }
 
+    public function listarProdutosCategoria() {
+
+        try {
+
+            if (!isset($_GET["categoria_id"])) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            if (empty($_GET["categoria_id"])) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            // validar se existe a categoria na base de dados
+            if (!$this->categoriaRepositorio->buscarPeloId($_GET["categoria_id"])) {
+                Resposta::response(false, "Categoria não encontrada na base de dados.");
+            }
+            
+            $produtos = $this->produtoRepositorio->buscarPelaCategoria($_GET["categoria_id"]);
+
+            if (empty($produtos)) {
+                Resposta::response(true, "Não foram encontrados produtos da categoria em questão.", array());
+            }
+
+            Resposta::response(true, "Produtos listados com sucesso.", array_map(function ($produto) {
+
+                return [
+                    "produto_id" => $produto["produto_id"],
+                    "nome_produto" => $produto["nome_produto"],
+                    "preco_venda" => $produto["preco_venda"],
+                    "unidades_estoque" => $produto["unidades_estoque"],
+                    "foto" => $produto["foto"],
+                    "status" => $produto["status"] ? "Ativo" : "Inativo"
+                ];
+            }, $produtos));
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se listar os produtos por categoria: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se listar os produtos por categoria.");
+        }
+
+    }
+
 }
