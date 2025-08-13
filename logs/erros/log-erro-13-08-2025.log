@@ -1,0 +1,5 @@
+[ ERRO ] - 13-08-2025 13:32:08 -> Erro ao tentar-se buscar o produto pelo id: SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "."
+LINE 1: SELECT *.p, c.nome AS nome_categoria, c.status AS status_cat...
+                ^
+
+

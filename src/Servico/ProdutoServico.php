@@ -118,4 +118,33 @@ class ProdutoServico extends ServicoBase {
 
     }
 
+    public function buscarPeloId() {
+
+        try {
+
+            if (!isset($_GET["produto_id"])) {
+                Resposta::response(false, "Informe o id do produto.");
+            }
+
+            $produtoId = $_GET["produto_id"];
+
+            if (empty($produtoId)) {
+                Resposta::response(false, "Informe o id do produto.");
+            }
+
+            $produto = $this->produtoRepositorio->buscarPeloId($produtoId);
+
+            if (empty($produto)) {
+                Resposta::response(false, "Produto não encontrado.");
+            }
+
+            Resposta::response(true, "Produto encontrado com sucesso.", $produto);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se buscar o produto pelo id: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se buscar o produto pelo id.");
+        }
+
+    }
+
 }

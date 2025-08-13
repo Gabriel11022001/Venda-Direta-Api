@@ -93,7 +93,7 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
     }
 
     public function buscarPeloId($id) {
-        $stmt = $this->bancoDados->prepare("SELECT *.p, c.nome AS nome_categoria, c.status AS status_categoria
+        $stmt = $this->bancoDados->prepare("SELECT p.*, c.nome AS nome_categoria, c.status AS status_categoria
         FROM tb_produtos AS p
         INNER JOIN tb_categorias AS c
         ON p.categoria_id = c.categoria_id
