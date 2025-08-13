@@ -134,4 +134,16 @@ class ProdutoRepositorio extends Repositorio implements IProdutoRepositorio {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function buscarPelaCategoria($categoriaId) {
+        $stmt = $this->bancoDados->prepare("SELECT p.*, c.nome AS nome_categoria, c.status AS status_categoria
+        FROM tb_produtos AS p INNER JOIN tb_categorias AS c
+        ON p.categoria_id = c.categoria_id
+        AND p.categoria_id = :categoria_id");
+
+        $stmt->bindValue(":categoria_id", $categoriaId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

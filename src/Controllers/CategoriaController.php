@@ -31,4 +31,8 @@ class CategoriaController {
         $this->categoriaServico->alterarStatus();
     }
 
+    public function deletar() {
+        $this->categoriaServico->deletar();
+    }
+
 }

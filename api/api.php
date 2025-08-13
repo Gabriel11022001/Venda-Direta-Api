@@ -77,6 +77,11 @@ try {
         $rota->get("/produtos/listar", ProdutoController::class, "listar");
     }
 
+    // deletar categoria de produto
+    if ($endpoint === "/categorias/deletar") {
+        $rota->delete("/categorias/deletar", CategoriaController::class, "deletar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

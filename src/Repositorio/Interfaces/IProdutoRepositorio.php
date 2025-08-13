@@ -8,4 +8,6 @@ interface IProdutoRepositorio extends IRepositorio, IBuscarPeloNomeRepositorio {
 
     function buscarSomentePossuemUnidadesEstoque($paginaAtual, $elementosPorPagina);
 
+    function buscarPelaCategoria($categoriaId);
+
 }

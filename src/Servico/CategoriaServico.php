@@ -6,6 +6,8 @@ use Exception;
 use Models\Categoria;
 use Repositorio\CategoriaRepositorio;
 use Repositorio\Interfaces\ICategoriaRepositorio;
+use Repositorio\Interfaces\IProdutoRepositorio;
+use Repositorio\ProdutoRepositorio;
 use Utils\Log;
 use Utils\Resposta;
 
@@ -15,11 +17,16 @@ class CategoriaServico extends ServicoBase {
      * @property ICategoriaRepositorio $categoriaRepositorio
      */
     private $categoriaRepositorio;
+    /**
+     * @property IProdutoRepositorio $produtoRepositorio
+     */
+    private $produtoRepositorio;
 
     public function __construct() {
         parent::__construct();
 
         $this->categoriaRepositorio = new CategoriaRepositorio($this->bancoDados);
+        $this->produtoRepositorio = new ProdutoRepositorio($this->bancoDados);
     }
 
     private function validarCamposCadastroCategoria($nomeCategoriaValidar) {
@@ -173,6 +180,43 @@ class CategoriaServico extends ServicoBase {
             Log::erro("Erro ao tentar-se alterar o status da categoria: " . $e->getMessage());
 
             Resposta::response(false, "Erro ao tentar-se alterar o status da categoria.");
+        }
+
+    }
+
+    public function deletar() {
+
+        try {
+
+            if (!isset($_GET["categoria_id"])) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            $categoriaId = $_GET["categoria_id"];
+
+            if (empty($categoriaId)) {
+                Resposta::response(false, "Informe o id da categoria.");
+            }
+
+            // validar se existe uma categoria cadastrada na base de dados com o id informado
+            $categoriaDeletar = $this->categoriaRepositorio->buscarPeloId($categoriaId);
+
+            if (!$categoriaDeletar) {
+                Resposta::response(false, "Não existe uma categoria cadastrada com o id informado.");
+            }
+
+            // validar se a categoria em questão está relacionada a algum produto
+            if (!empty($this->produtoRepositorio->buscarPelaCategoria($categoriaId))) {
+                Resposta::response(false, "A categoria em questão está relacionada a produtos, não é possível deletar a mesma.");
+            }
+
+            $this->categoriaRepositorio->deletar($categoriaId);
+
+            Resposta::response(true, "Categoria deletada com sucesso.");
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se deletar a categoria do produto na base de dados: " . $e->getMessage());
+            
+            Resposta::response(false, "Erro ao tentar-se deletar a categoria do produto.");
         }
 
     }
