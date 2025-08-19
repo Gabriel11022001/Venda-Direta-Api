@@ -1,0 +1,3 @@
+[ ERRO ] - 14-08-2025 13:56:42 -> Erro ao tentar-se executar as migrations: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "tb_usuarios" does not exist
+
+

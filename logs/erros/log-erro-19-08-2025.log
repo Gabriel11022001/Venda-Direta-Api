@@ -1,0 +1,32 @@
+[ ERRO ] - 19-08-2025 14:35:38 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[22008]: Datetime field overflow: 7 ERROR:  date/time field value out of range: "19/07/1971"
+HINT:  Perhaps you need a different "datestyle" setting.
+CONTEXT:  unnamed portal parameter $3 = '...'
+
+
+[ ERRO ] - 19-08-2025 15:00:16 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_enderecos" violates foreign key constraint "tb_enderecos_cliente_id_fkey"
+DETAIL:  Key (cliente_id)=(0) is not present in table "tb_clientes".
+
+
+[ ERRO ] - 19-08-2025 15:01:10 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_enderecos" violates foreign key constraint "tb_enderecos_cliente_id_fkey"
+DETAIL:  Key (cliente_id)=(0) is not present in table "tb_clientes".
+
+
+[ ERRO ] - 19-08-2025 15:02:24 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  insert or update on table "tb_enderecos" violates foreign key constraint "tb_enderecos_cliente_id_fkey"
+DETAIL:  Key (cliente_id)=(0) is not present in table "tb_clientes".
+
+
+[ ERRO ] - 19-08-2025 15:03:26 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "tb_email" does not exist
+LINE 1: INSERT INTO tb_email(email, cliente_id) VALUES($1, $2)
+                    ^
+
+
+[ ERRO ] - 19-08-2025 15:12:15 -> Erro ao tentar-se cadastrar o cliente na base de dados: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for type boolean: ""
+CONTEXT:  unnamed portal parameter $2 = ''
+
+
+[ ERRO ] - 19-08-2025 15:14:33 -> O telefone  é inválido.
+
+
+[ ERRO ] - 19-08-2025 15:17:29 -> Você informou um telefone vazio.
+
+

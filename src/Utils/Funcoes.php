@@ -90,4 +90,87 @@ class Funcoes {
         return $erros;
     }
 
+    public static function validarCamposCadastroCliente($dadosCliente) {
+        $erros = array();
+
+        if (empty($dadosCliente["nome"])) {
+            $erros["nome"] = "Informe o nome do cliente.";
+        }
+
+        if (empty($dadosCliente["cpf"])) {
+            $erros["cpf"] = "Informe o cpf do cliente.";
+        } else if (!self::validarCpf($dadosCliente["cpf"])) {
+            $erros["cpf"] = "O cpf informado é inválido.";
+        }
+
+        if (empty($dadosCliente["data_nascimento"])) {
+            $erros["data_nascimento"] = "Informe a data de nascimento.";
+        } else if (!self::validarDataNascimento($dadosCliente["data_nascimento"])) {
+            $erros["data_nascimento"] = "Data de nascimento inválida.";
+        }
+
+        if (empty($dadosCliente["usuario_id"])) {
+            $erros["usuario_id"] = "Informe o id do usuário.";
+        }
+
+        if (empty($dadosCliente["endereco"])) {
+            $erros["endereco"] = "Informe o endereço do cliente.";
+        } else {
+            // validar endereço do cliente
+        }
+
+        if (empty($dadosCliente["emails"])) {
+            $erros["emails"] = "Informe os e-mails do cliente.";
+        } else {
+
+            foreach ($dadosCliente["emails"] as $email) {
+
+                if (!self::validarEmail($email->email)) {
+                    
+                    throw new EmailInvalidoException("O e-mail " . $email->email . " é inválido.");
+                }
+
+            }
+
+        }
+
+        if (empty($dadosCliente["telefones"])) {
+            $erros["telefones"] = "Informe os telefones do cliente.";
+        } else {
+
+            foreach ($dadosCliente["telefones"] as $telefone) {
+                $validarTelefone = self::validarTelefone($telefone->telefone);
+                
+                if (!empty($validarTelefone)) {
+
+                    throw new TelefoneInvalidoException($validarTelefone);
+                }
+
+            }
+
+        }
+
+        return $erros;
+    }
+
+    public static function validarCpf($cpf) {
+
+        return true;
+    }
+
+    public static function validarDataNascimento($dataNascimento) {
+
+        return true;
+    }
+
+    public static function validarTelefone($telefone) {
+
+        if (empty($telefone)) {
+
+            return "Você informou um telefone vazio.";
+        }
+
+        return "";
+    }
+
 }

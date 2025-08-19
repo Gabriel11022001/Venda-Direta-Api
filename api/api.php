@@ -1,6 +1,7 @@
 <?php
 
 use Controllers\CategoriaController;
+use Controllers\ClienteController;
 use Controllers\LoginController;
 use Controllers\ProdutoController;
 use Controllers\Rota;
@@ -95,6 +96,11 @@ try {
     // listar produtos pela categoria
     if ($endpoint === "/produtos/listar-pela-categoria") {
         $rota->get("/produtos/listar-pela-categoria", ProdutoController::class, "listarProdutosCategoria");
+    }
+
+    // cadastrar cliente na base de dados
+    if ($endpoint === "/clientes/cadastrar") {
+        $rota->post("/clientes/cadastrar", ClienteController::class, "cadastrar");
     }
 
     Resposta::response(false, "404 - Rota inválida.");
