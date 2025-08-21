@@ -103,6 +103,11 @@ try {
         $rota->post("/clientes/cadastrar", ClienteController::class, "cadastrar");
     }
 
+    // listar os clientes na base de dados
+    if ($endpoint === "/clientes/listar") {
+        $rota->post("/clientes/listar", ClienteController::class, "listar");
+    }
+
     Resposta::response(false, "404 - Rota inválida.");
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "<br>";

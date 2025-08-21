@@ -34,4 +34,6 @@ interface IClienteRepositorio extends IRepositorio {
 
     function validarExisteEmailBaseDados($email);
 
+    function listarClientesUsuario($paginaAtual, $elementosPorPagina, $usuarioId);
+
 }

@@ -19,4 +19,8 @@ class ClienteController {
         $this->clienteServico->cadastrar();
     }
 
+    public function listar() {
+        $this->clienteServico->listar();
+    }
+
 }

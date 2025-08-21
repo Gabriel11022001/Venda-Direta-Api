@@ -163,4 +163,42 @@ class ClienteServico extends ServicoBase {
 
     }
 
+    public function listar() {
+
+        try {
+            $paginaAtual = getParametro("pagina_atual");
+            $elementoPorPagina = getParametro("elementos_por_pagina");
+            $usuarioId = getParametro("usuario_id");
+
+            if (empty($paginaAtual) || empty($elementoPorPagina) || empty($usuarioId)) {
+                Resposta::response(false, "Informe a página atual, a quantidade de elementos por página e o id do usuário na url.");
+            }
+
+            if ($paginaAtual <= 0) {
+                $paginaAtual = 1;
+            }
+
+            if ($elementoPorPagina != 5 && $elementoPorPagina != 10 && $elementoPorPagina != 15) {
+                $elementoPorPagina = 5;
+            }
+
+            if (empty($this->usuarioRepositorio->buscarPeloId($usuarioId))) {
+                Resposta::response(false, "Não existe um usuário na base de dados com o id informado.", null);
+            }
+
+            $clientes = $this->clienteRepositorio->listarClientesUsuario($paginaAtual, $elementoPorPagina, $usuarioId);
+
+            if (empty($clientes)) {
+                Resposta::response(true, "Não foram encontrados clientes na base de dados.", array());
+            }
+
+            Resposta::response(true, "Clientes listados com sucesso.", $clientes);
+        } catch (Exception $e) {
+            Log::erro("Erro ao tentar-se listar os clientes: " . $e->getMessage());
+
+            Resposta::response(false, "Erro ao tentar-se listar os clientes.");
+        }
+
+    }
+
 }

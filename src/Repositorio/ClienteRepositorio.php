@@ -49,7 +49,7 @@ class ClienteRepositorio extends Repositorio implements IClienteRepositorio {
     }
 
     public function listarPaginado($paginaAtual, $elementosPorPagina) {
-        
+
     }
 
     public function deletar($id) {
@@ -244,6 +244,54 @@ class ClienteRepositorio extends Repositorio implements IClienteRepositorio {
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function listarClientesUsuario($paginaAtual, $elementosPorPagina, $usuarioId) {
+        $stmt = $this->bancoDados->prepare("SELECT * FROM tb_clientes WHERE usuario_id = :usuario_id
+        ORDER BY nome ASC
+        OFFSET :offset
+        LIMIT :limit");
+        
+        $stmt->bindValue(":usuario_id", $usuarioId, PDO::PARAM_INT);
+        $stmt->bindValue(":limit", $elementosPorPagina);
+        $stmt->bindValue(":offset", ($paginaAtual - 1) * $elementosPorPagina);
+        $stmt->execute();
+
+        $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($clientes)) {
+
+            return [];
+        }
+
+        foreach ($clientes as $indiceCliente => $cliente) {
+            $idCliente = $cliente["cliente_id"];
+
+            // buscar os dados do endereço do cliente
+            $stmt = $this->bancoDados->prepare("SELECT * FROM tb_enderecos WHERE cliente_id = :cliente_id");
+
+            $stmt->bindValue(":cliente_id", $idCliente, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            $clientes[$indiceCliente]["endereco"] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // buscar os e-mails do cliente
+            $stmt = $this->bancoDados->prepare("SELECT * FROM tb_emails WHERE cliente_id = :cliente_id");
+
+            $stmt->bindValue(":cliente_id", $idCliente, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $clientes[$indiceCliente]["emails"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // buscar os telefones do cliente
+            $stmt = $this->bancoDados->prepare("SELECT * FROM tb_telefones WHERE cliente_id = :cliente_id");
+            $stmt->bindValue(":cliente_id", $idCliente, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $clientes[$indiceCliente]["telefones"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $clientes;
     }
 
 }
